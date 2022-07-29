@@ -2868,7 +2868,7 @@ class NRCLex:
                'zealous': ['joy', 'positive', 'trust'], 'zest': ['anticipation', 'joy', 'positive', 'trust'],
                'zip': ['negative']}
 
-    def __init__(self, text):
+    def __init__(self):
         pass
         
     def load_sentence(self, text):
