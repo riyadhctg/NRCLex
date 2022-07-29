@@ -2884,6 +2884,11 @@ class NRCLex:
         build_word_affect(self)
         top_emotions(self)
 
+    def load_lemmatized_tokens(self, tokens):
+        self.words = tokens
+        build_word_affect(self)
+        top_emotions(self)
+
     def append_text(self, text_add):
         self.text = self.text + ' ' + text_add
         blob = TextBlob(self.text)
