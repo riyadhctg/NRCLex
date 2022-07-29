@@ -2889,6 +2889,13 @@ class NRCLex:
         build_word_affect(self)
         top_emotions(self)
 
+    def filter_by_affects(self, affect_filter_list):
+        filtered_affect_words = []
+        for k,v in self.affect_dict.items():
+            if len(set(v).intersection(set(affect_filter_list))) > 0:
+                filtered_affect_words.append(k)
+        return filtered_affect_words
+
     def append_text(self, text_add):
         self.text = self.text + ' ' + text_add
         blob = TextBlob(self.text)
