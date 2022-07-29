@@ -2897,6 +2897,13 @@ class NRCLex:
                 filtered_affect_words.append(k)
         return filtered_affect_words
     
+    def get_original_words(self, lemmatized_words):
+        original_words = []
+        for w in lemmatized_words:
+            original_words.append(self.lemmatized_dict[w])
+        return original_words
+            
+    
     def lemmatizer(self, sentence):
         import pattern
         from pattern.en import lemma, lexeme
