@@ -2897,7 +2897,7 @@ class NRCLex:
                 filtered_affect_words.append(k)
         return filtered_affect_words
     
-    def lemmatizer(sentence):
+    def lemmatizer(self, sentence):
         import pattern
         from pattern.en import lemma, lexeme
         from gensim.utils import lemmatize
