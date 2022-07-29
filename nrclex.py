@@ -2902,7 +2902,8 @@ class NRCLex:
         from pattern.en import lemma, lexeme
         from gensim.utils import lemmatize
         import re
-        lemmatized_out = None
+        self.lemmatized_dict = dict()
+        self.lemmatized_out = []
         
         if (type(sentence) == list):
             sentence = ' '.join(sentence)
@@ -2911,7 +2912,10 @@ class NRCLex:
         for i in range(100):
             for attempt in range(10):
                 try:
-                    lemmatized_out = [wd.decode('utf-8').split('/')[0] for wd in lemmatize(sentence)]
+                    for wd in lemmatize(sentence):
+                        _wd = wd.decode('utf-8').split('/')[0]
+                        lemmatized = self.lemmatized_out.append(lemmatize(_wd))
+                        self.lemmatized_dict.update({lemmatized: _wd})
                 except Exception as e:
                     print('error received: ', e)
                     print('retrying. attempt: ', attempt)
@@ -2919,7 +2923,7 @@ class NRCLex:
                     break
             else:
                 print("we failed all the attempts - deal with the consequences.")
-        return lemmatized_out
+        return self.lemmatized_out
 
     def load_unlemmatized_text(self, sentence):
         self.words = self.lemmatizer(sentence)
