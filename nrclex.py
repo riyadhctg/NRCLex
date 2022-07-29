@@ -2869,7 +2869,8 @@ class NRCLex:
                'zip': ['negative']}
 
     def __init__(self):
-        pass
+        import nltk
+        nltk.download('omw-1.4')
         
     def load_sentence(self, text):
         self.text = text
@@ -2895,7 +2896,36 @@ class NRCLex:
             if len(set(v).intersection(set(affect_filter_list))) > 0:
                 filtered_affect_words.append(k)
         return filtered_affect_words
+    
+    def lemmatizer(sentence):
+        import pattern
+        from pattern.en import lemma, lexeme
+        from gensim.utils import lemmatize
+        import re
+        lemmatized_out = None
+        
+        if (type(sentence) == list):
+            sentence = ' '.join(sentence)
 
+        # retry due to intermittent 'generator raised StopIteration' issue
+        for i in range(100):
+            for attempt in range(10):
+                try:
+                    lemmatized_out = [wd.decode('utf-8').split('/')[0] for wd in lemmatize()]
+                except Exception as e:
+                    print('error received: ', e)
+                    print('retrying. attempt: ', attempt)
+                else:
+                    break
+            else:
+                print("we failed all the attempts - deal with the consequences.")
+        return lemmatized_out
+
+    def load_unlemmatized_text(self, sentence):
+        self.words = self.lemmatizer(sentence)
+        build_word_affect(self)
+        top_emotions(self)
+    
     def append_text(self, text_add):
         self.text = self.text + ' ' + text_add
         blob = TextBlob(self.text)
