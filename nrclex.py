@@ -2911,7 +2911,7 @@ class NRCLex:
         for i in range(100):
             for attempt in range(10):
                 try:
-                    lemmatized_out = [wd.decode('utf-8').split('/')[0] for wd in lemmatize()]
+                    lemmatized_out = [wd.decode('utf-8').split('/')[0] for wd in lemmatize(sentence)]
                 except Exception as e:
                     print('error received: ', e)
                     print('retrying. attempt: ', attempt)
