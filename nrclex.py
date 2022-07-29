@@ -8,7 +8,8 @@
 
 from textblob import TextBlob
 from collections import Counter
-
+from nltk.stem.snowball import SnowballStemmer
+stemmer = SnowballStemmer("english")
 
 def build_word_affect(self):
     # Build word affect function
@@ -2868,12 +2869,32 @@ class NRCLex:
                'zip': ['negative']}
 
     def __init__(self, text):
+        pass
+        
+    def load_sentence(self, text):
         self.text = text
         blob = TextBlob(text)
         self.words = [w.lemmatize() for w in blob.words]
         self.sentences = list(blob.sentences)
         build_word_affect(self)
         top_emotions(self)
+
+    def load_tokens(self, tokens):
+        self.words = [w.lemmatize() for w in tokens]
+        build_word_affect(self)
+        top_emotions(self)
+
+    def load_lemmatized_tokens(self, tokens):
+        self.words = tokens
+        build_word_affect(self)
+        top_emotions(self)
+
+    def filter_by_affects(self, affect_filter_list):
+        filtered_affect_words = []
+        for k,v in self.affect_dict.items():
+            if len(set(v).intersection(set(affect_filter_list))) > 0:
+                filtered_affect_words.append(k)
+        return filtered_affect_words
 
     def append_text(self, text_add):
         self.text = self.text + ' ' + text_add
