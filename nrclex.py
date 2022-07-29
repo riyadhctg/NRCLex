@@ -2919,10 +2919,12 @@ class NRCLex:
         for i in range(100):
             for attempt in range(10):
                 try:
-                    for wd in lemmatize(sentence):
-                        _wd = wd.decode('utf-8').split('/')[0]
-                        lemmatized = self.lemmatized_out.append(lemmatize(_wd))
-                        self.lemmatized_dict.update({lemmatized: _wd})
+                    lemmatized = lemmatize(sentence)
+                    original = sentence.split(' ')
+                    for i in range(len(lemmatized)):
+                        _wd = lemmatized[i].decode('utf-8').split('/')[0]
+                        self.lemmatized_out.append(_wd)
+                        self.lemmatized_dict.update({_wd: original})
                 except Exception as e:
                     print('error received: ', e)
                     print('retrying. attempt: ', attempt)
