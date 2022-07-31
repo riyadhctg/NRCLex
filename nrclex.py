@@ -2896,12 +2896,6 @@ class NRCLex:
             if len(set(v).intersection(set(affect_filter_list))) > 0:
                 filtered_affect_words.append(k)
         return filtered_affect_words
-    
-    def get_original_words(self, lemmatized_words):
-        original_words = []
-        for w in lemmatized_words:
-            original_words.append(self.lemmatized_dict[w])
-        return original_words
             
     
     def lemmatizer(self, sentence):
@@ -2909,7 +2903,6 @@ class NRCLex:
         from pattern.en import lemma, lexeme
         from gensim.utils import lemmatize
         import re
-        self.lemmatized_dict = dict()
         self.lemmatized_out = []
         
         if (type(sentence) == list):
@@ -2924,7 +2917,6 @@ class NRCLex:
                     for i in range(len(lemmatized)):
                         _wd = lemmatized[i].decode('utf-8').split('/')[0]
                         self.lemmatized_out.append(_wd)
-                        self.lemmatized_dict.update({_wd: original[i]})
                 except Exception as e:
                     print('error received: ', e)
                     print('retrying. attempt: ', attempt)
